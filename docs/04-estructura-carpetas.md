@@ -8,10 +8,14 @@ Sistema-Financiero/
 ├── docs/                          Documentación de diseño (este directorio)
 ├── supabase/
 │   ├── migrations/
-│   │   ├── 0001_init.sql          Extensiones, tipos, tablas, índices
-│   │   ├── 0002_rls.sql           Políticas de seguridad a nivel de fila
-│   │   ├── 0003_functions.sql     Triggers, funciones, vistas materializadas
-│   │   └── 0004_seed.sql          Categorías y reglas de correo por defecto
+│   │   ├── …_init_schema.sql      Extensiones, tipos, tablas, índices
+│   │   ├── …_row_level_security   Políticas de seguridad a nivel de fila
+│   │   ├── …_functions_and_…      Triggers, funciones, vistas materializadas
+│   │   ├── …_seed_email_rules     Reglas de correo de los bancos
+│   │   ├── …_security_hardening   Cierra los hallazgos del analizador
+│   │   ├── …_move_extensions_…    unaccent y pg_trgm fuera de `public`
+│   │   ├── …_align_normalize_…    normalize_merchant == core/text.ts
+│   │   └── …_restore_accents_…    Tildes en las categorías por defecto
 │   └── config.toml
 │
 ├── src/
