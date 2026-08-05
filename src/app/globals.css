@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens de diseño.
+ *
+ * El tema claro/oscuro es un cambio de variables, no de clases: cada componente
+ * usa `bg-background`, `text-foreground`, etc. y funciona en ambos modos sin
+ * variantes `dark:` repartidas por todo el código.
+ */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 20% 12%;
+
+    --primary: 224 76% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 224 20% 20%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 220 14% 96%;
+    --accent-foreground: 224 20% 20%;
+
+    /* Semántica financiera. Nunca se usa solo el color: siempre acompaña a un
+       icono o etiqueta, para no depender de la percepción cromática. */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 30% 12%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 76% 48%;
+
+    --chart-1: 224 76% 55%;
+    --chart-2: 173 58% 42%;
+    --chart-3: 262 60% 60%;
+    --chart-4: 32 92% 55%;
+    --chart-5: 340 72% 58%;
+    --chart-6: 199 80% 48%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 24% 7%;
+    --foreground: 210 20% 96%;
+
+    --card: 224 22% 10%;
+    --card-foreground: 210 20% 96%;
+
+    --popover: 224 22% 10%;
+    --popover-foreground: 210 20% 96%;
+
+    --primary: 217 91% 62%;
+    --primary-foreground: 224 24% 7%;
+
+    --secondary: 223 18% 16%;
+    --secondary-foreground: 210 20% 96%;
+
+    --muted: 223 18% 16%;
+    --muted-foreground: 218 11% 62%;
+
+    --accent: 223 18% 18%;
+    --accent-foreground: 210 20% 96%;
+
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 66% 48%;
+    --success-foreground: 224 24% 7%;
+    --warning: 38 92% 58%;
+    --warning-foreground: 30 30% 12%;
+
+    --border: 223 18% 20%;
+    --input: 223 18% 20%;
+    --ring: 217 91% 62%;
+
+    --chart-1: 217 91% 65%;
+    --chart-2: 173 60% 50%;
+    --chart-3: 262 70% 70%;
+    --chart-4: 32 95% 62%;
+    --chart-5: 340 75% 65%;
+    --chart-6: 199 85% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Cifras alineadas verticalmente en tablas. Sin esto las columnas de importes
+     "bailan" al cambiar de dígitos, que es exactamente donde más molesta. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Scrollbar discreta pero visible; la nativa de Windows rompe la estética. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Superficie estándar de tarjeta. La jerarquía se construye con borde y
+     fondo, no con sombras marcadas. */
+  .surface {
+    @apply rounded-lg border border-border bg-card text-card-foreground;
+  }
+
+  .surface-hover {
+    @apply transition-colors duration-150 hover:bg-accent/50;
+  }
+}
+
+@layer utilities {
+  .animate-in-view {
+    animation: fade-in 0.4s cubic-bezier(0.32, 0.72, 0, 1) both;
+  }
+}
+
+/* Accesibilidad: respetar la preferencia del sistema por movimiento reducido.
+   Se desactiva toda transición no esencial, no solo algunas. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

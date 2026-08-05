@@ -1,0 +1,7 @@
+import { redirect } from "next/navigation";
+import { getSessionUser } from "@/server/supabase/server";
+
+export default async function RootPage() {
+  const user = await getSessionUser();
+  redirect(user ? "/dashboard" : "/login");
+}
